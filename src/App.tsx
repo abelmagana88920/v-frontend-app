@@ -80,7 +80,7 @@ function App() {
 
       </form>
 
-      <h2>Select a Vehicle</h2>
+      <h2 className="vehicleText">Select a Vehicle</h2>
       {commonVehicles.map((vehicle: VehicleType, index)=>(
         <button key={index} className='commonVehicleButtons' onClick={()=>handleSetCommonVehicle(vehicle)}>
           {titleCase(vehicle.make)} {vehicle.model} {vehicle.badge}
