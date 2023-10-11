@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { data, getMake, getModel, getBadge, commonVehicles, titleCase } from './utils';
+import type { VehicleType } from './type';
 
 function App() {
 
-  const [optionMakes, setOptionMakes] = useState([] as any);
-  const [optionModels, setOptionModels] = useState([] as any);
-  const [optionBadges, setOptionBadges] = useState([] as any);
+  const [optionMakes, setOptionMakes] = useState<string[]>([]);
+  const [optionModels, setOptionModels] = useState<string[]>([]);
+  const [optionBadges, setOptionBadges] = useState<string[]>([]);
 
   const [make, setMake] = useState('');
   const [model, setModel] = useState('');
@@ -28,7 +29,7 @@ function App() {
     setBadge(badge);
   }
 
-  function handleSetCommonVehicle(vehicle: any) {
+  function handleSetCommonVehicle(vehicle: VehicleType) {
     setMake(vehicle.make);
     setOptionModels(getModel(data, vehicle.make));
 
@@ -45,7 +46,7 @@ function App() {
   return (
     <div>
       <h1>Drill Down Form</h1>
-      <form method="POST" action="http://localhost:4000/upload">
+      <form method="POST" action="http://localhost:4000/upload" encType="multipart/form-data" >
         <select name="make" onChange={(e)=>handleChangeMake(e.target.value)} value={make}>
           <option disabled value=''>make</option>
           {optionMakes.map((make: string, index: number)=>
@@ -72,7 +73,7 @@ function App() {
         {!!badge && (
           <>
             <div className="logbookText">Upload Logbook:</div>
-            <div><input type="file" /> </div>
+            <div><input name="file" type="file" accept=".txt" /> </div>
             <div> <input type="submit" value="Submit" /></div>
           </>
         )}
@@ -80,7 +81,7 @@ function App() {
       </form>
 
       <h2>Select a Vehicle</h2>
-      {commonVehicles.map((vehicle: any, index)=>(
+      {commonVehicles.map((vehicle: VehicleType, index)=>(
         <button key={index} className='commonVehicleButtons' onClick={()=>handleSetCommonVehicle(vehicle)}>
           {titleCase(vehicle.make)} {vehicle.model} {vehicle.badge}
         </button>
