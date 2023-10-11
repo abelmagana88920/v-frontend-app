@@ -46,7 +46,7 @@ function App() {
   return (
     <div>
       <h1>Drill Down Form</h1>
-      <form method="POST" action="http://localhost:4000/upload" encType="multipart/form-data" >
+      <form method="POST" action={`${process.env.REACT_APP_BACKEND}/upload`} encType="multipart/form-data" >
         <select name="make" onChange={(e)=>handleChangeMake(e.target.value)} value={make}>
           <option disabled value=''>make</option>
           {optionMakes.map((make: string, index: number)=>
